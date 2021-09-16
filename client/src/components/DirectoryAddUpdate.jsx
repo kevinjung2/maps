@@ -143,6 +143,24 @@ export default function DirectoryAddUpdate() {
     }
   };
 
+  //populates County based on ZIP code
+  const fetchCounty = async () => {
+    console.log("started to look for county");
+
+    try {
+      const res = await fetch(REACT_APP_PROXY + `/get_county/${zip}`);
+      if (!res.ok) {
+        throw Error("Cannot retrieve county.");
+      }
+
+      const countyResults = await res.json();
+      console.log(countyResults);
+      setCounty(countyResults.county || "")
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const submitForm = (e) => {
     e.preventDefault();
 
@@ -316,6 +334,7 @@ export default function DirectoryAddUpdate() {
                   value={zip}
                   placeholder={"Zip code"}
                   handleChange={(e) => setZip(e.target.value)}
+                  onBlur={fetchCounty}
                   errors={errors}
                 />{" "}
               </div>
