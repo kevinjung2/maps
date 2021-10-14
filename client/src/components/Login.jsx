@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { FormGroup } from 'react-bootstrap';
 
 import Input from './Input'
+import Button from './Button'
 
 const Login = () => {
-  const [username, setUsername] = ""
-  const [password, setPassword] = ""
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
+    console.log(username, password);
+  }
 
   return(
     <div className="login-form">
@@ -39,6 +45,7 @@ const Login = () => {
             handleChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        <Button action={handleFormSubmit} type={"primary"} title={"Login"} />
       </FormGroup>
     </div>
   )
